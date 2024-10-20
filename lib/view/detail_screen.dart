@@ -38,6 +38,20 @@ class _DetailScreenState extends State<DetailScreen> {
             SizedBox(height: 8.0.h),
             Text('Width: ${widget.meme.width}',style:Theme.of(context).textTheme.bodyMedium,),
             Text('Height: ${widget.meme.height}',style:Theme.of(context).textTheme.bodyMedium),
+                            ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                    ),
+                    onPressed: () {
+                      
+                    },
+                    child: Text(
+                      "Edit & download",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),),
               ],
             ),
           ),
