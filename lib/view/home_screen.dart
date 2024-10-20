@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meme/model/meme_model.dart';
+import 'package:meme/view/detail_screen.dart';
 import 'package:meme/view_model/home_page_view_model/meme_list.dart';
 import 'package:provider/provider.dart';
 
@@ -10,9 +11,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   TextEditingController searchController = TextEditingController();
-   final FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
 // @override
 //   void initState() {
 //     final memeListProvider = Provider.of<MemeList>(context,listen: false);
@@ -28,45 +28,46 @@ class _HomeScreenState extends State<HomeScreen> {
     final memeListProvider = Provider.of<MemeList>(context);
     return Scaffold(
       appBar: AppBar(
-        title:TextField(
+        title: TextField(
           focusNode: _focusNode,
-          onTapOutside: (event){
+          onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();
           },
           autofocus: false,
           controller: searchController,
-            cursorColor: Colors.black,
-            
-            decoration: InputDecoration(
-                hintText: " Search...",
-                border: InputBorder.none,
-                
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  color: Color.fromRGBO(93, 25, 72, 1),
-                  onPressed: () {
-                    memeListProvider.getSearchData(searchController.text);
-                  },
-                ),),
-            style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
+          cursorColor: Colors.black,
+          decoration: InputDecoration(
+            hintText: " Search...",
+            border: InputBorder.none,
+            suffixIcon: IconButton(
+              icon: Icon(Icons.search),
+              color: Color.fromRGBO(93, 25, 72, 1),
+              onPressed: () {
+                memeListProvider.getSearchData(searchController.text);
+              },
+            ),
           ),
+          style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
+        ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(left: 8.w, right: 8.w,top: 10.h),
+          padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 10.h),
           child: FutureBuilder(
             future: memeListProvider.getData(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator(),);
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               } else {
                 final memesToShow = searchController.text.isNotEmpty
-                ? memeListProvider.filteredMemes
-                : memeListProvider.memeList;
+                    ? memeListProvider.filteredMemes
+                    : memeListProvider.memeList;
                 // if (memesToShow.isEmpty) {
                 //   return Center(child: Text('No memes found'));
                 // }
-                if(searchController.text.isEmpty){
+                if (searchController.text.isEmpty) {
                   memeListProvider.filteredMemes.clear();
                 }
                 return ListView.builder(
@@ -86,19 +87,32 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: 2.h,
                             ),
-                            
-                            
-                            Text(meme.captions.toString(),),
-                            SizedBox(height: 3.h,),
+                            Text(
+                              meme.captions.toString(),
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
                             GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailScreen(meme: meme),
+                                  ),
+                                );
+                              },
                               child: Center(
                                 child: Image.network(
-                                  meme.url?? "loading",
+                                  meme.url ?? "loading",
                                   fit: BoxFit.cover,
-                                  ),
+                                ),
                               ),
                             ),
-                            SizedBox(height: 15.h,)
+                            SizedBox(
+                              height: 15.h,
+                            )
                           ],
                         ),
                       ),
