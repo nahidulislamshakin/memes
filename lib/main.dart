@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meme/view/home_screen.dart';
-import 'package:meme/view_model/meme_list.dart';
+import 'package:meme/view_model/home_page_view_model/meme_list.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget{
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.deepPurple.shade100
+            ),
             textTheme: TextTheme(
                 bodyLarge: TextStyle(fontSize:16.sp,),
                 bodyMedium: TextStyle(fontSize: 14.sp),
