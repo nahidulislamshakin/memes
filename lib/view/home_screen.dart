@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:meme/model/meme_model.dart';
 import 'package:meme/view/detail_screen.dart';
 import 'package:meme/view_model/home_page_view_model/meme_list.dart';
 import 'package:provider/provider.dart';
@@ -13,15 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-// @override
-//   void initState() {
-//     final memeListProvider = Provider.of<MemeList>(context,listen: false);
 
-//     // searchController.addListener((){
-//     //   memeListProvider.getSearchData(searchController.text);
-//     // });
-//     super.initState();
-//   }
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +48,13 @@ class _HomeScreenState extends State<HomeScreen> {
             future: memeListProvider.getData(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
                 final memesToShow = searchController.text.isNotEmpty
                     ? memeListProvider.filteredMemes
                     : memeListProvider.memeList;
-                // if (memesToShow.isEmpty) {
-                //   return Center(child: Text('No memes found'));
-                // }
                 if (searchController.text.isEmpty) {
                   memeListProvider.filteredMemes.clear();
                 }

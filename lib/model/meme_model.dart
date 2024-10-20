@@ -1,3 +1,5 @@
+//Model class take json data as input in class member to create list of a object
+
 class MemeModel {
   bool? _success;
   Data? _data;
